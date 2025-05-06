@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rendi Sang Manusia Pengagum</title>
+  <title>Manusia Pengagum</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="book-cover">
-    <h1>Rendi Sang Manusia Pengagum</h1>
-    <h2>by Rendi</h2>
+    <h1>Manusia Pengagum</h1>
+    <h2>About You</h2>
   </div>
   <div class="quotes">
     <p>"jatuh cinta padamu adalah ketidak sengajaan yang jauh lebih indah dari ribuan hal yang pernah aku rencanakan"</p>
@@ -24,3 +24,111 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+body {
+/* style.css */
+
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: #fef6e4;
+  color: #001858;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.book-cover {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f582ae;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+}
+
+.book-cover h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+.book-cover h2 {
+  font-size: 1.2em;
+  margin-top: 10px;
+  font-weight: normal;
+}
+
+.quotes {
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+.quotes p {
+  background: #ffffff;
+  border-left: 4px solid #8bd3dd;
+  padding: 12px 20px;
+  margin: 16px 0;
+  border-radius: 6px;
+  font-style: italic;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+// script.js
+
+document.addEventListener("DOMContentLoaded", () => {
+  const quotesContainer = document.querySelector(".quotes");
+  const allQuotes = Array.from(quotesContainer.querySelectorAll("p"));
+
+  // Sembunyikan semua kutipan
+  allQuotes.forEach(p => p.style.display = "none");
+
+  // Tambahkan tombol untuk ganti kutipan
+  const button = document.createElement("button");
+  button.textContent = "Tampilkan Kutipan Berikutnya";
+  button.style.marginTop = "20px";
+  button.style.padding = "10px 20px";
+  button.style.border = "none";
+  button.style.background = "#f582ae";
+  button.style.color = "white";
+  button.style.borderRadius = "6px";
+  button.style.cursor = "pointer";
+  quotesContainer.after(button);
+
+  let currentIndex = -1;
+
+  function showRandomQuote() {
+    // Sembunyikan kutipan saat ini
+    if (currentIndex >= 0) {
+      allQuotes[currentIndex].style.display = "none";
+    }
+
+    // Pilih kutipan acak baru yang tidak sama dengan sebelumnya
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * allQuotes.length);
+    } while (newIndex === currentIndex);
+
+    currentIndex = newIndex;
+    const quote = allQuotes[currentIndex];
+    quote.style.display = "block";
+    quote.style.opacity = 0;
+    quote.style.transform = "translateY(10px)";
+    quote.style.transition = "all 0.6s ease";
+
+    setTimeout(() => {
+      quote.style.opacity = 1;
+      quote.style.transform = "translateY(0)";
+    }, 10);
+  }
+
+  button.addEventListener("click", showRandomQuote);
+
+  // Tampilkan kutipan pertama secara otomatis dan lanjut setiap 7 detik
+  showRandomQuote();
+  setInterval(showRandomQuote, 7000);
+});
+
